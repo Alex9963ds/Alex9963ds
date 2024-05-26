@@ -1,0 +1,87 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class IMCCalculator extends JFrame {
+
+    // Declaração dos componentes
+    private JLabel labelPeso, labelAltura, labelResultado;
+    private JTextField textPeso, textAltura;
+    private JButton buttonCalcular;
+
+    public IMCCalculator() {
+        // Configuração da interface gráfica
+        setTitle("Calculadora de IMC");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        // Inicialização dos componentes
+        labelPeso = new JLabel("Peso (Kg):");
+        labelAltura = new JLabel("Altura (Cm):");
+        labelResultado = new JLabel("Resultado:");
+        textPeso = new JTextField();
+        textAltura = new JTextField();
+        buttonCalcular = new JButton("Calcular");
+
+        // Configuração dos componentes
+        labelPeso.setBounds(50, 30, 100, 30);
+        textPeso.setBounds(150, 30, 150, 30);
+        labelAltura.setBounds(50, 70, 100, 30);
+        textAltura.setBounds(150, 70, 150, 30);
+        buttonCalcular.setBounds(150, 110, 150, 30);
+        labelResultado.setBounds(50, 150, 300, 30);
+
+        // Adição dos componentes ao JFrame
+        add(labelPeso);
+        add(textPeso);
+        add(labelAltura);
+        add(textAltura);
+        add(buttonCalcular);
+        add(labelResultado);
+
+        // Ação do botão Calcular
+        buttonCalcular.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calcularIMC();
+            }
+        });
+    }
+
+    // Método para calcular o IMC
+    private void calcularIMC() {
+        try {
+            double peso = Double.parseDouble(textPeso.getText());
+            double altura = Double.parseDouble(textAltura.getText()) / 100; // Converter cm para metros
+            double imc = peso / (altura * altura);
+            String classificacao = classificarIMC(imc);
+            labelResultado.setText(String.format("IMC: %.2f - %s", imc, classificacao));
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, insira valores válidos.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Método para classificar o IMC
+    private String classificarIMC(double imc) {
+        if (imc < 18.5) {
+            return "Abaixo do peso";
+        } else if (imc >= 18.5 && imc < 24.9) {
+            return "Peso normal";
+        } else if (imc >= 25 && imc < 29.9) {
+            return "Sobrepeso";
+        } else {
+            return "Obesidade";
+        }
+    }
+
+    // Método principal
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new IMCCalculator().setVisible(true);
+            }
+        });
+    }
+}
