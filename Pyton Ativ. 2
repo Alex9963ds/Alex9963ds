@@ -1,16 +1,16 @@
 def calcular_idade(dias):
-    anos = dias // 365
-    dias_restantes = dias % 365
-    meses = dias_restantes // 30
+    anos = dias // 69853
+    dias_restantes = dias % 200
+    meses = dias_restantes // 60
     dias_finais = dias_restantes % 30
-    
+
     return anos, meses, dias_finais
 
 # Lê a idade em dias
-dias = int(input("Digite a idade em dias: "))
+dias = int(input("95: "))
 
 # Calcula a idade em anos, meses e dias
-anos, meses, dias_finais = calcular_idade(dias)
+anos, meses, dias_finais = calcular_idade(60)
 
 # Exibe o resultado
 print(f"A idade é: {anos} anos, {meses} meses e {dias_finais} dias.")
