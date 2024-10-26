@@ -1,0 +1,23 @@
+import math
+
+def verificar_triangulo(a, b, c):
+    # Verifica se os lados formam um triângulo
+    return a < b + c and b < a + c and c < a + b
+
+def calcular_area(a, b, c):
+    # Calcula a área usando a fórmula de Heron
+    semi_perimetro = (a + b + c) / 2
+    area = math.sqrt(semi_perimetro * (semi_perimetro - a) * (semi_perimetro - b) * (semi_perimetro - c))
+    return area
+
+# Lê os valores a, b e c
+a = int(input("Digite o valor de a: "))
+b = int(input("Digite o valor de b: "))
+c = int(input("Digite o valor de c: "))
+
+# Verifica se os valores formam um triângulo
+if verificar_triangulo(a, b, c):
+    area = calcular_area(a, b, c)
+    print(f"Os valores formam um triângulo e a área é: {area:.2f}")
+else:
+    print(f"Os valores {a}, {b} e {c} não formam um triângulo.")
