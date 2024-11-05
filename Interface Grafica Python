@@ -13,7 +13,7 @@ class IMCCalculator(wx.Frame):
         self.endereco_label = wx.StaticText(self.panel, label="Rua Santana:")
         self.endereco_text = wx.TextCtrl(self.panel)
 
-        self.altura_label = wx.StaticText(self.panel, label="Altura (1,50):")
+        self.altura_label = wx.StaticText(self.panel, label="Altura (1.50):")
         self.altura_text = wx.TextCtrl(self.panel)
 
         self.peso_label = wx.StaticText(self.panel, label="Peso (85):")
