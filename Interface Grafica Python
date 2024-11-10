@@ -1,34 +1,26 @@
+import wx
+
 class IMCCalculator(wx.Frame):
     def __init__(self, *args, **kw):
         super(IMCCalculator, self).__init__(*args, **kw)
 
         self.panel = wx.Panel(self)
-        self.SetTitle("Cálculo do IMC - Índice de Massa Corporal")
-        self.SetSize(400, 300)
+        self.SetTitle("Cálculo do IMC")
+        self.SetSize(300, 250)
 
-        # Criando os componentes
-        self.nome_label = wx.StaticText(self.panel, label="João:")
-        self.nome_text = wx.TextCtrl(self.panel)
-
-        self.altura_label = wx.StaticText(self.panel, label="Altura (1.70):")
-        self.altura_text = wx.TextCtrl(self.panel)
-
-        self.peso_label = wx.StaticText(self.panel, label="Peso (70):")
-        self.peso_text = wx.TextCtrl(self.panel)
-
-        self.resultado_label = wx.StaticText(self.panel, label="Resultado IMC:")
+        Componentes
+        self.altura_label = wx.StaticText(self.panel, label="Altura (cm):")
+        self.altura_text = wx.TextCtrl(self.panel, value="160")  
+        self.peso_label = wx.StaticText(self.panel, label="Peso (kg):")
+        self.peso_text = wx.TextCtrl(self.panel, value="60")  
+        self.resultado_label = wx.StaticText(self.panel, label="IMC:")
         self.resultado_text = wx.TextCtrl(self.panel, style=wx.TE_READONLY)
 
         self.calcular_btn = wx.Button(self.panel, label="Calcular")
-        self.reiniciar_btn = wx.Button(self.panel, label="Reiniciar")
         self.sair_btn = wx.Button(self.panel, label="Sair")
 
-        # Layout usando BoxSizer
+        Layout com BoxSizer
         sizer = wx.BoxSizer(wx.VERTICAL)
-        sizer.Add(self.nome_label, 0, wx.ALL, 5)
-        sizer.Add(self.nome_text, 0, wx.EXPAND | wx.ALL, 5)
-        sizer.Add(self.endereco_label, 0, wx.ALL, 5)
-        sizer.Add(self.endereco_text, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.altura_label, 0, wx.ALL, 5)
         sizer.Add(self.altura_text, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.peso_label, 0, wx.ALL, 5)
@@ -36,31 +28,22 @@ class IMCCalculator(wx.Frame):
         sizer.Add(self.resultado_label, 0, wx.ALL, 5)
         sizer.Add(self.resultado_text, 0, wx.EXPAND | wx.ALL, 5)
         sizer.Add(self.calcular_btn, 0, wx.ALL | wx.CENTER, 5)
-        sizer.Add(self.reiniciar_btn, 0, wx.ALL | wx.CENTER, 5)
         sizer.Add(self.sair_btn, 0, wx.ALL | wx.CENTER, 5)
 
         self.panel.SetSizer(sizer)
 
-        # Bind dos botões
+        Bind dos botões
         self.calcular_btn.Bind(wx.EVT_BUTTON, self.calcular_imc)
-        self.reiniciar_btn.Bind(wx.EVT_BUTTON, self.reiniciar)
         self.sair_btn.Bind(wx.EVT_BUTTON, self.on_sair)
 
     def calcular_imc(self, event):
         try:
-            altura = float(self.altura_text.GetValue()) / 100  # Convertendo cm para m
+            altura = float(self.altura_text.GetValue()) / 100  
             peso = float(self.peso_text.GetValue())
             imc = peso / (altura ** 2)
             self.resultado_text.SetValue(f"{imc:.2f}")
         except ValueError:
-            wx.MessageBox("Por favor, insira valores válidos para altura e peso.", "Erro", wx.OK | wx.ICON_ERROR)
-
-    def reiniciar(self, event):
-        self.nome_text.SetValue("")
-        self.endereco_text.SetValue("")
-        self.altura_text.SetValue("")
-        self.peso_text.SetValue("")
-        self.resultado_text.SetValue("")
+            wx.MessageBox("Valores inválidos, por favor insira números válidos.", "Erro", wx.OK | wx.ICON_ERROR)
 
     def on_sair(self, event):
         self.Close()
