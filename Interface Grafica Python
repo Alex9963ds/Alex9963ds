@@ -16,7 +16,7 @@ class IMCCalculator(wx.Frame):
         self.peso_label = wx.StaticText(self.panel, label="Peso (70):")
         self.peso_text = wx.TextCtrl(self.panel)
 
-        self.resultado_label = wx.StaticText(self.panel, label="Resultado:")
+        self.resultado_label = wx.StaticText(self.panel, label="Resultado IMC:")
         self.resultado_text = wx.TextCtrl(self.panel, style=wx.TE_READONLY)
 
         self.calcular_btn = wx.Button(self.panel, label="Calcular")
