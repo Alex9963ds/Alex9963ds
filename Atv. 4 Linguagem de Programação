@@ -1,0 +1,78 @@
+import sqlite3
+
+# Função para criar o banco de dados e a tabela, se não existir
+def criar_banco():
+    conn = sqlite3.connect('imc.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS pacientes (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT NOT NULL,
+            peso REAL NOT NULL,
+            altura REAL NOT NULL,
+            imc REAL NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Função para calcular o IMC
+def calcular_imc(peso, altura):
+    return peso / (altura ** 2)
+
+# Função para inserir os dados no banco de dados
+def inserir_dados(nome, peso, altura, imc):
+    conn = sqlite3.connect('imc.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO pacientes (nome, peso, altura, imc)
+        VALUES (?, ?, ?, ?)
+    ''', (nome, peso, altura, imc))
+    conn.commit()
+    conn.close()
+
+# Função para consultar todos os registros do banco de dados
+def consultar_dados():
+    conn = sqlite3.connect('imc.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM pacientes')
+    registros = cursor.fetchall()
+    conn.close()
+    return registros
+
+# Função principal que executa a aplicação
+def main():
+    criar_banco()  # Criar o banco e a tabela
+    
+    while True:
+        print("\nAplicação de Cálculo de IMC")
+        print("1. Calcular IMC")
+        print("2. Consultar histórico de IMCs")
+        print("3. Sair")
+        
+        opcao = input("Escolha uma opção: ")
+        
+        if opcao == '1':
+            nome = input("João")
+            peso = float(input("70kg "))
+            altura = float(input("1,75"))
+            
+            imc = calcular_imc(peso, altura)
+            print(f"O IMC de {nome} é: {imc:.2f}")
+            
+            inserir_dados(nome, peso, altura, imc)
+        
+        elif opcao == '2':
+            registros = consultar_dados()
+            print("\nHistórico de IMCs:")
+            for registro in registros:
+                print(f"ID: {registro[0]}, Nome: {registro[1]}, Peso: {registro[2]}kg, Altura: {registro[3]}m, IMC: {registro[4]:.2f}")
+        
+        elif opcao == '3':
+            print("Saindo da aplicação...")
+            break
+        else:
+            print("Opção inválida! Tente novamente.")
+
+if __name__ == "__main__":
+    main()
